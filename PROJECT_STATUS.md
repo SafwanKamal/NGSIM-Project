@@ -123,33 +123,33 @@ compact surrounding: 1,354 rows, 15 vehicles
 
 Shows the ego vehicle path using lateral and longitudinal position.
 
-![Ego trajectory](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_xy.png)
+![Ego trajectory](docs/assets/scenario_023_vehicle_2001164/ego_xy.png)
 
 ### 2. Lane ID over time
 
 Shows when the ego vehicle changes lanes over the scenario.
 
-![Lane over time](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_lane_over_time.png)
+![Lane over time](docs/assets/scenario_023_vehicle_2001164/ego_lane_over_time.png)
 
 ### 3. Maneuver position, velocity, and acceleration
 
 Compact maneuver-window plot centered at the target lane-change frame.
 
-![Maneuver position velocity acceleration](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_maneuver_position_velocity_acceleration.png)
+![Maneuver position velocity acceleration](docs/assets/scenario_023_vehicle_2001164/ego_maneuver_position_velocity_acceleration.png)
 
 ### 4. Lateral movement and lane ID
 
 This plot makes the lateral lane-change behavior easier to inspect. `Local_X_m` is small compared with `Local_Y_m`, so it needs its own scale.
 
-![Lateral position and lane](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_maneuver_lateral_position_lane.png)
+![Lateral position and lane](docs/assets/scenario_023_vehicle_2001164/ego_maneuver_lateral_position_lane.png)
 
 ### 5. Speed and acceleration over the full scenario
 
 These plots help detect odd speed jumps or acceleration artifacts before using a scenario in simulation.
 
-![Speed over time](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_speed_over_time.png)
+![Speed over time](docs/assets/scenario_023_vehicle_2001164/ego_speed_over_time.png)
 
-![Acceleration over time](outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_acceleration_over_time.png)
+![Acceleration over time](docs/assets/scenario_023_vehicle_2001164/ego_acceleration_over_time.png)
 
 ## File Examples
 
@@ -169,7 +169,7 @@ These plots help detect odd speed jumps or acceleration artifacts before using a
   - `outputs/scenarios/scenario_023_vehicle_2001164/ego_maneuver_window.csv`
 
 - Maneuver plot:
-  - `outputs/scenarios/scenario_023_vehicle_2001164/plots/ego_maneuver_lateral_position_lane.png`
+  - `docs/assets/scenario_023_vehicle_2001164/ego_maneuver_lateral_position_lane.png`
 
 ## Important Caveats
 
