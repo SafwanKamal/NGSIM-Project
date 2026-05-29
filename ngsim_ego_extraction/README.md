@@ -99,7 +99,7 @@ Lane-change scenarios also include maneuver-window context:
 
 ---
 
-## 🎬 Trajectory Simulation Playback (Pygame)
+## Trajectory Simulation Playback (Pygame)
 
 An interactive, high-fidelity vector simulator is implemented in Python using **Pygame** to visually play back all 30 scenario corridors in real-time.
 
