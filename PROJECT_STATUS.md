@@ -43,6 +43,7 @@
 - Added compact and full surrounding-vehicle exports.
 - Added maneuver-window files for ego and surrounding vehicles.
 - Added plots for trajectory, lane over time, speed, acceleration, and maneuver-window behavior.
+- Implemented a modular, high-fidelity **interactive Pygame scenario simulation visualizer** (in `src/ngsim_visualizer/`) with an easy-to-use runner (`scripts/06_run_pygame_simulation.py`) for real-time visual inspection of the 30 scenario corridors.
 - Cleaned the output structure so the current deliverables live under a single `outputs/` folder.
 
 ## Current Dataset and Scenario Result
@@ -90,6 +91,15 @@ outputs/
 
   scenario_summary.md
   reference/
+
+src/
+  ngsim_visualizer/
+    __init__.py
+    visualizer.py                    <-- Core Pygame interactive rendering engine
+
+scripts/
+  06_run_pygame_simulation.py        <-- Simulation interactive runner launcher
+
 ```
 
 ## Example Scenario
@@ -192,10 +202,13 @@ These plots help detect odd speed jumps or acceleration artifacts before using a
 
 ## Current State
 
-The project now has a reproducible pipeline that produces `30` lane-change maneuver scenarios from the full official NGSIM US-101 dataset. The current outputs are suitable for visual QA and for conversion into a simulator-specific scenario format.
+The project now has a reproducible pipeline that produces `30` lane-change maneuver scenarios from the full official NGSIM US-101 dataset. The current outputs are suitable for visual QA and for conversion into a simulator-specific scenario format. 
+
+Additionally, a premium interactive Pygame simulation visualizer has been built to play back these scenarios in real-time with neon assets, fading trajectory tails, and an interactive telemetry HUD.
 
 Recommended next step:
 
 ```text
-Review plots for the 30 scenarios and choose the subset that best matches the simulator comparison goals.
+Run the interactive Pygame trajectory simulation to visually play back and QA any of the 30 scenario corridors:
+  python scripts/06_run_pygame_simulation.py
 ```

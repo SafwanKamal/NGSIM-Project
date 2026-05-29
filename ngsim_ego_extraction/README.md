@@ -78,6 +78,12 @@ python scripts/04_plot_scenarios.py
 python scripts/05_summarize_scenarios.py
 ```
 
+8. Play back the scenarios in the interactive Pygame simulation visualizer:
+
+```bash
+python scripts/06_run_pygame_simulation.py
+```
+
 Generated files are written under `outputs/`.
 
 Each scenario exports both surrounding-vehicle context files:
@@ -90,3 +96,56 @@ Lane-change scenarios also include maneuver-window context:
 - `lane_changes.csv`: compact lane-change event index.
 - `ego_maneuver_window.csv`: ego trajectory from 5 seconds before to 5 seconds after the target lane-change frame.
 - `surrounding_maneuver_window.csv`: compact surrounding vehicles over the same maneuver window.
+
+---
+
+## 🎬 Trajectory Simulation Playback (Pygame)
+
+An interactive, high-fidelity vector simulator is implemented in Python using **Pygame** to visually play back all 30 scenario corridors in real-time.
+
+### Running the Visualizer
+From the `ngsim_ego_extraction/` project root directory, execute:
+```bash
+python scripts/06_run_pygame_simulation.py
+```
+
+### Necessary Folder Structure & Files
+
+The visualizer auto-discovers and maps scenarios using the following layout and components:
+
+```text
+ngsim_ego_extraction/
+  ├── scripts/
+  │     └── 06_run_pygame_simulation.py  # Simulation launcher runner
+  │
+  ├── src/
+  │     └── ngsim_visualizer/            # Visualizer package directory
+  │             ├── __init__.py          # Package initialization
+  │             └── visualizer.py        # Core Pygame rendering engine loop
+  │
+  └── outputs/
+        └── scenarios/
+              └── scenario_XXX_vehicle_YYYY/  # Scenario directories (e.g. 001 to 030)
+                    ├── metadata.yaml        # Segment, Ego ID, active bounds metadata
+                    ├── ego_trajectory.csv   # Ego (X_m, Y_m) position/speed arrays
+                    └── surrounding_vehicles.csv  # Compact surrounding traffic coordinates
+```
+
+* **`metadata.yaml`**: Contains `vehicle_id` (used to track/draw EGO in bright orange), `time_segment` label, and crop bounds.
+* **`ego_trajectory.csv`**: Contains chronological coordinates (`Local_X_m`, `Local_Y_m`), speeds, and accelerations.
+* **`surrounding_vehicles.csv`**: Compact coordinate timelines of nearby traffic. *Note: Pressing `F` dynamically loads `surrounding_vehicles_full.csv` for the broader local context pool.*
+
+### Key Controls Layout
+* **`Space`**: Pause / Resume playback.
+* **`<-` / `->` (Left/Right Arrows)**: Seek backward / forward 1.0 second (10 frames).
+* **`Up` / `Down` (Up/Down Arrows)**: Adjust playback speed rate (`0.25x`, `0.5x`, `1.0x`, `2.0x`, `5.0x`).
+* **`[` / `]`** (or **`PageUp / PageDn`**): Switch between scenario folders (e.g. previous/next).
+* **`1-9`**: Jump directly to scenarios 1 through 9.
+* **`V`**: Toggle camera tracking views:
+  * **Ego-Centered Tracking View**: Scroll-centers on EGO with neon vector labels (auto-scrolling).
+  * **Full Road View**: Displays the entire 500m cropped segment in a single static frame.
+* **`F`**: Toggle traffic density context (Compact simulator-ready vs. Full broad surroundings).
+* **`T`**: Toggle Ego past trail (-50m trail) on/off.
+* **`P`**: Toggle Ego future predicted path (+50m forecast) on/off.
+* **`Esc` or `Q`**: Close / Exit the visualizer.
+

@@ -51,6 +51,19 @@ Each scenario folder includes:
 - `surrounding_maneuver_window.csv`: compact surrounding traffic during the maneuver.
 - `plots/`: visual QA plots.
 
+## 🎬 NEW: Interactive Playback Simulation
+
+You can now play back and visually QA any of the 30 scenario corridors in real-time using a premium, high-fidelity vector simulator written in **Pygame**!
+
+To start the interactive playback visualizer:
+```bash
+python scripts/06_run_pygame_simulation.py
+```
+
+* **Interactive HUD Dashboard**: Displays elapsed time, frame ID, speed (m/s & mph), active acceleration, and lane tracking.
+* **Vector Highway & Trajectory Tails**: Draws standard lane markings with glowing vehicle vectors and neon historical trajectory trails.
+* **Dual Camera Views**: Press `V` to toggle between a **Full Segment view** (fits the entire 500m segment) and an **Ego-Centered Tracking view** (scroll-tracks with Ego).
+
 ## Current Scenario Design
 
 - Dataset: official NGSIM US-101.
