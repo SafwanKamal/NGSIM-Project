@@ -13,10 +13,11 @@
 - Use a 500 m road-window crop for scenario recreation.
   - Scenarios are selected around a target lane-change event while preserving roughly 500 m of ego trajectory context.
 
-- Apply the leader-free rule only during the target maneuver window.
-  - Rule: `Preceding == 0 OR Space_Headway_m > 75 m`.
+- Apply the leader-free rule during the target maneuver window.
+  - Rule: `Preceding == 0 OR Space_Headway_m > 50 m` for at least `80%` of the target maneuver window frames.
   - This is checked from `5 seconds before` to `5 seconds after` the target lane-change frame.
   - Outside the maneuver window, preceding vehicles are allowed.
+  - **Root Cause & Lane-Balancing Logic**: Initially, a strict headway of `75 m` (approx. 16 car lengths) for `100%` of frames was required. Due to high traffic densities on the US-101, fast left-middle lanes (Lanes 2, 3, 4, 5) rarely maintain such large gaps for 10 continuous seconds. This disqualified left-lane candidates and heavily biased the final scenario pool to the slow, right-most lane (Lane 7), leaving the right side (Lane 8) empty in playback. Relaxing the threshold to `50 m` (approx. 11 car lengths—still fully unconstrained for lane-changing) and the check fraction to `0.8` successfully balanced the ego candidates evenly across all middle lanes `[2, 3, 4, 5, 6, 7]`.
 
 - Keep middle/freeway lanes configurable.
   - Current middle-lane set: `[2, 3, 4, 5, 6, 7]`.
@@ -53,7 +54,7 @@
 - Scenario type: target lane-change event scenarios.
 - Current exported scenario count: `30`.
 - Scenario length target: approximately `500 m`.
-- Leader-free check: only inside the target lane-change maneuver window.
+- Leader-free check: only inside the target lane-change maneuver window (Space_Headway_m > 50 m for >= 80% of window).
 - Output folder: `outputs/`.
 
 The key interpretation is:

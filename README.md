@@ -64,5 +64,5 @@ python scripts/06_run_pygame_simulation.py
 - **Maneuver Window**: 5 seconds before to 5 seconds after the target lane-change frame.
 - **Local Leader-Free Constraint**:
   ```text
-  Preceding == 0 OR Space_Headway_m > 75 m
+  Preceding == 0 OR Space_Headway_m > 50 m (checked across at least 80% of maneuver window frames)
   ```
