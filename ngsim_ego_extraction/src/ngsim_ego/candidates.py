@@ -226,7 +226,36 @@ def extract_ego_candidates(df: pd.DataFrame, config: dict) -> pd.DataFrame:
                 ascending=[False, False, True],
                 na_position="last",
             )
-            return result.head(max_candidates).reset_index(drop=True)
+            
+            # Balance candidates evenly across all middle lanes to prevent left/right lane bias
+            selected_candidates = []
+            candidates_per_lane = max(1, max_candidates // len(middle_lanes))
+            lane_counts = {lane: 0 for lane in middle_lanes}
+            
+            # First pass: collect up to quota per lane
+            for _, row in result.iterrows():
+                slane = int(row["start_lane"])
+                if slane in lane_counts and lane_counts[slane] < candidates_per_lane:
+                    selected_candidates.append(row)
+                    lane_counts[slane] += 1
+            
+            # Second pass: fill up the remaining spots with best overall candidates
+            used_keys = set((r["Vehicle_ID"], r["start_frame"]) for r in selected_candidates)
+            for _, row in result.iterrows():
+                if len(selected_candidates) >= max_candidates:
+                    break
+                key = (row["Vehicle_ID"], row["start_frame"])
+                if key not in used_keys:
+                    selected_candidates.append(row)
+                    used_keys.add(key)
+            
+            balanced_result = pd.DataFrame(selected_candidates)
+            balanced_result = balanced_result.sort_values(
+                ["duration_seconds", "mean_space_headway_m", "num_lane_changes"],
+                ascending=[False, False, True],
+                na_position="last",
+            ).reset_index(drop=True)
+            return balanced_result
 
     candidates = []
     for vehicle_id, vehicle_df in df.groupby("Vehicle_ID"):
@@ -354,7 +383,43 @@ def extract_ego_candidates(df: pd.DataFrame, config: dict) -> pd.DataFrame:
             ascending=[False, False, True],
             na_position="last",
         )
-    return result.head(max_candidates).reset_index(drop=True)
+        
+    # Balance candidates evenly across all middle lanes to prevent left/right lane bias
+    selected_candidates = []
+    candidates_per_lane = max(1, max_candidates // len(middle_lanes))
+    lane_counts = {lane: 0 for lane in middle_lanes}
+    
+    # First pass: collect up to quota per lane
+    for _, row in result.iterrows():
+        slane = int(row["start_lane"])
+        if slane in lane_counts and lane_counts[slane] < candidates_per_lane:
+            selected_candidates.append(row)
+            lane_counts[slane] += 1
+            
+    # Second pass: fill up remaining spots with best overall candidates
+    used_keys = set((r["Vehicle_ID"], r["start_frame"]) for r in selected_candidates)
+    for _, row in result.iterrows():
+        if len(selected_candidates) >= max_candidates:
+            break
+        key = (row["Vehicle_ID"], row["start_frame"])
+        if key not in used_keys:
+            selected_candidates.append(row)
+            used_keys.add(key)
+            
+    balanced_result = pd.DataFrame(selected_candidates)
+    if selection.get("leader_check_mode", "full_window") == "maneuver_windows":
+        balanced_result = balanced_result.sort_values(
+            ["has_lane_change", "duration_seconds", "mean_space_headway_m", "num_lane_changes"],
+            ascending=[False, False, False, True],
+            na_position="last",
+        ).reset_index(drop=True)
+    else:
+        balanced_result = balanced_result.sort_values(
+            ["duration_seconds", "mean_space_headway_m", "num_lane_changes"],
+            ascending=[False, False, True],
+            na_position="last",
+        ).reset_index(drop=True)
+    return balanced_result
 
 
 def save_candidate_outputs(candidates: pd.DataFrame, config: dict) -> tuple[Path, Path]:

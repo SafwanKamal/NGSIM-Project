@@ -24,10 +24,10 @@ def record_mp4():
         print("No scenarios found to record.")
         return
         
-    # We will record scenario 23 (vehicle 2001164)
+    # We will record scenario 17 (vehicle 1023)
     target_idx = 0
     for idx, path in enumerate(visualizer.scenario_paths):
-        if "2001164" in path.name:
+        if "1023" in path.name:
             target_idx = idx
             break
     visualizer.load_scenario(target_idx)

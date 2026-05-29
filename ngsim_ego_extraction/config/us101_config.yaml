@@ -38,10 +38,10 @@ candidate_selection:
   manual_middle_lanes: [2, 3, 4, 5, 6, 7]
   require_middle_lane_fraction: 1.0
   min_duration_seconds: 10
-  local_leader_free_distance_m: 75
+  local_leader_free_distance_m: 50
   leader_check_mode: "maneuver_windows"
   lane_change_window_seconds: 5
-  require_no_close_leader_fraction: 1.0
+  require_no_close_leader_fraction: 0.8
   min_window_distance_fraction: 0.9
   prefer_lane_change_events: true
   max_candidates_to_export: 30

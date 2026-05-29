@@ -131,7 +131,7 @@ compact surrounding: 1,354 rows, 15 vehicles
 
 ### Interactive Trajectory Simulation Playback
 
-A video playback demonstrating the interactive Pygame trajectory simulation for Scenario 23 (Vehicle 2001164). It showcases the scrolling road segment, stylized vehicle vectors with active headlights/braking taillights, telemetry dashboard HUD, and the de-cluttered Ego vehicle past trail (-50m) and future predicted path (+50m).
+A video playback demonstrating the interactive Pygame trajectory simulation for Scenario 17 (Vehicle 1023). It showcases the scrolling road segment, stylized vehicle vectors with active headlights/braking taillights, telemetry dashboard HUD, and the de-cluttered Ego vehicle past trail (-50m) and future predicted path (+50m).
 
 <video src="docs/assets/simulation_recording.mp4" width="100%" controls></video>
 

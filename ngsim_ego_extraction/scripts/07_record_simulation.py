@@ -22,10 +22,10 @@ def record_gif():
         print("No scenarios found to record.")
         return
         
-    # We will record scenario 23 (vehicle 2001164, which is our representative example)
+    # We will record scenario 17 (vehicle 1023)
     target_idx = 0
     for idx, path in enumerate(visualizer.scenario_paths):
-        if "2001164" in path.name:
+        if "1023" in path.name:
             target_idx = idx
             break
     visualizer.load_scenario(target_idx)
