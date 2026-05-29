@@ -1,0 +1,61 @@
+dataset_name: "NGSIM US-101"
+
+input_file: "data/raw/us101_trajectories.csv"
+raw_data_dir: "data/raw"
+load_all_raw_files: true
+
+kaggle:
+  dataset: "nigelwilliams/ngsim-vehicle-trajectory-data-us-101"
+  copy_to_raw_dir: true
+
+official_dot:
+  dataset_api: "https://data.transportation.gov/api/views/8ect-6jqj"
+  attachment_name: "US-101-LosAngeles-CA.zip"
+  download_dir: "data/raw/us101_official"
+  extract_nested_zips: true
+
+units:
+  original_position: "feet"
+  original_speed: "feet_per_second"
+  output_position: "meters"
+  output_speed: "meters_per_second"
+
+road:
+  use_crop: true
+  crop_length_m: 500
+  full_segment_length_m: 640
+
+time_segments:
+  - name: "segment_1"
+    label: "7:50 AM - 8:05 AM"
+  - name: "segment_2"
+    label: "8:05 AM - 8:20 AM"
+  - name: "segment_3"
+    label: "8:20 AM - 8:35 AM"
+
+candidate_selection:
+  auto_detect_middle_lanes: false
+  manual_middle_lanes: [2, 3, 4, 5, 6, 7]
+  require_middle_lane_fraction: 1.0
+  min_duration_seconds: 10
+  local_leader_free_distance_m: 75
+  leader_check_mode: "maneuver_windows"
+  lane_change_window_seconds: 5
+  require_no_close_leader_fraction: 1.0
+  min_window_distance_fraction: 0.9
+  prefer_lane_change_events: true
+  max_candidates_to_export: 30
+
+surrounding_vehicles:
+  behind_distance_m: 50
+  ahead_distance_m: 100
+  lane_radius: 1
+  compact_behind_distance_m: 30
+  compact_ahead_distance_m: 60
+  compact_min_frames: 20
+  compact_closest_per_direction: true
+
+export:
+  output_dir: "outputs"
+  save_plots: true
+  clean_scenarios_dir: true

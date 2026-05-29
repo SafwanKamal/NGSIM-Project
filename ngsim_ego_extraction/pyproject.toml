@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ngsim-ego-extraction"
+version = "0.1.0"
+description = "Extract ego-vehicle scenarios from NGSIM US-101 trajectory data."
+requires-python = ">=3.10"
+dependencies = [
+  "kagglehub>=0.3,<1",
+  "matplotlib>=3.7",
+  "pandas>=2.0",
+  "PyYAML>=6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

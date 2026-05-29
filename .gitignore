@@ -1,0 +1,29 @@
+AGENTS.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Raw and generated data
+ngsim_ego_extraction/data/raw/*
+!ngsim_ego_extraction/data/raw/README.md
+ngsim_ego_extraction/data/processed/*
+!ngsim_ego_extraction/data/processed/.gitkeep
+ngsim_ego_extraction/outputs/
+
+# Large local reference artifacts
+*.zip
+*.pdf
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
