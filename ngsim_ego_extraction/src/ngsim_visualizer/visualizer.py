@@ -61,7 +61,7 @@ class ScenarioVisualizer:
         
         # Rendering view settings
         self.view_mode = "ego_centered" 
-        self.show_full_surrounding = False 
+        self.show_full_surrounding = True 
         self.show_tails = True
         self.show_future_paths = True  # Toggleable predicted future path
         
