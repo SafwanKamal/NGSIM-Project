@@ -49,7 +49,7 @@ candidate_selection:
 surrounding_vehicles:
   behind_distance_m: 50
   ahead_distance_m: 100
-  lane_radius: 1
+  lane_radius: 2
   compact_behind_distance_m: 30
   compact_ahead_distance_m: 60
   compact_min_frames: 20

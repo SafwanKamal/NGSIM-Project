@@ -16,11 +16,12 @@ def extract_surrounding_vehicles(df: pd.DataFrame, ego: pd.DataFrame, config: di
     ahead_m = float(settings.get("ahead_distance_m", 100))
     lane_radius = int(settings.get("lane_radius", 1))
 
-    selected_indexes = []
     if "source_index" in df.columns and "source_index" in ego.columns:
         source_value = ego["source_index"].iloc[0]
         df = df[df["source_index"].eq(source_value)]
 
+    # 1. Identify all vehicle IDs that are ever in the spatial box of the ego vehicle
+    surrounding_vids = set()
     frame_groups = {frame: frame_df for frame, frame_df in df.groupby("Frame_ID")}
     for _, ego_row in ego.iterrows():
         frame_df = frame_groups.get(ego_row["Frame_ID"])
@@ -35,12 +36,15 @@ def extract_surrounding_vehicles(df: pd.DataFrame, ego: pd.DataFrame, config: di
             & y_delta.ge(-behind_m)
             & y_delta.le(ahead_m)
         )
-        selected_indexes.extend(frame_df.index[mask].tolist())
+        surrounding_vids.update(frame_df.loc[mask, "Vehicle_ID"].tolist())
 
-    if not selected_indexes:
+    if not surrounding_vids:
         return pd.DataFrame(columns=df.columns)
 
-    surrounding = df.loc[sorted(set(selected_indexes))].copy()
+    # 2. Extract complete trajectories for these vehicles during all co-existing frames
+    ego_frames = set(ego["Frame_ID"])
+    surrounding = df[df["Vehicle_ID"].isin(surrounding_vids) & df["Frame_ID"].isin(ego_frames)].copy()
+    
     surrounding = _scenario_time(surrounding, ego)
     return surrounding.sort_values(["Frame_ID", "Vehicle_ID"]).reset_index(drop=True)
 
