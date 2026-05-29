@@ -2,6 +2,14 @@
 
 Python workflow for extracting simulator-ready ego-vehicle scenarios from the NGSIM US-101 trajectory dataset.
 
+## Shared Outputs
+
+The full generated outputs are shared outside GitHub:
+
+[NGSIM Project Shared Outputs](https://texastechuniversity-my.sharepoint.com/:f:/g/personal/safkamal_ttu_edu/IgAMLRBHgXRQQqx9GqOyJK8vAWOFK251gDu3bDasSXuRrGU?e=lepLrl)
+
+Use that folder for the final `outputs/` directory, including all exported scenario CSVs, metadata, and plots.
+
 ## Quick Start
 
 1. Download the Kaggle dataset:
